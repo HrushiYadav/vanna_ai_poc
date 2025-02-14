@@ -1,0 +1,98 @@
+CREATE TABLE manufacturers (
+    manufacturer_id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    country TEXT,
+    contact_email TEXT,
+    quality_rating FLOAT
+);
+
+CREATE TABLE distributors (
+    distributor_id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    region TEXT,
+    contact_email TEXT,
+    delivery_rating FLOAT
+);
+
+CREATE TABLE parts (
+    part_id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    manufacturer_id INTEGER,
+    description TEXT,
+    diameter_mm FLOAT,
+    weight_kg FLOAT,
+    material TEXT,
+    carbon_footprint_kg FLOAT,
+    price DECIMAL(10,2),
+    FOREIGN KEY (manufacturer_id) REFERENCES manufacturers(manufacturer_id)
+);
+
+CREATE TABLE part_distributors (
+    part_id INTEGER,
+    distributor_id INTEGER,
+    stock_quantity INTEGER,
+    lead_time_days INTEGER,
+    PRIMARY KEY (part_id, distributor_id),
+    FOREIGN KEY (part_id) REFERENCES parts(part_id),
+    FOREIGN KEY (distributor_id) REFERENCES distributors(distributor_id)
+);
+
+INSERT INTO manufacturers (name, country, contact_email, quality_rating) VALUES
+('TechCore Industries', 'USA', 'contact@techcore.com', 4.8),
+('EcoMakers Ltd', 'Germany', 'info@ecomakers.de', 4.9),
+('GreenParts Co', 'Japan', 'support@greenparts.jp', 4.7),
+('SustainTech', 'Sweden', 'info@sustaintech.se', 4.6),
+('InnovateManuf', 'China', 'sales@innovatemanuf.cn', 4.5),
+('EcoPrecision', 'Switzerland', 'contact@ecoprecision.ch', 4.9),
+('GlobalGreen', 'Canada', 'info@globalgreen.ca', 4.7),
+('SmartParts Inc', 'UK', 'support@smartparts.uk', 4.6),
+('TechnoEco', 'France', 'contact@technoeco.fr', 4.8),
+('EcoSolutions', 'Netherlands', 'info@ecosolutions.nl', 4.7);
+
+INSERT INTO distributors (name, region, contact_email, delivery_rating) VALUES
+('FastShip Global', 'North America', 'sales@fastship.com', 4.6),
+('EuroDistrib', 'Europe', 'orders@eurodistrib.eu', 4.8),
+('AsiaLogistics', 'Asia', 'support@asialogistics.com', 4.7),
+('GreenSupply Co', 'Global', 'info@greensupply.com', 4.9),
+('EcoDelivery', 'Europe', 'sales@ecodelivery.eu', 4.5),
+('WorldParts', 'Global', 'contact@worldparts.com', 4.7),
+('RegionalSupply', 'North America', 'orders@regionalsupply.com', 4.8),
+('GlobalEco', 'Global', 'support@globaleco.com', 4.6),
+('QuickShip', 'Asia Pacific', 'sales@quickship.com', 4.7),
+('EcoLogistics', 'Europe', 'info@ecologistics.eu', 4.8);
+
+INSERT INTO parts (name, manufacturer_id, description, diameter_mm, weight_kg, material, carbon_footprint_kg, price) VALUES
+('Eco Battery Cell', 1, 'High-capacity battery cell', 65.5, 0.45, 'Lithium-Ion', 12.5, 89.99),
+('Solar Panel Frame', 2, 'Aluminum frame for solar panels', 0, 2.8, 'Recycled Aluminum', 8.3, 45.50),
+('Wind Turbine Bearing', 3, 'Heavy-duty bearing', 120.2, 5.6, 'Stainless Steel', 25.7, 299.99),
+('EV Motor Component', 4, 'Electric vehicle motor part', 85.3, 3.2, 'Copper-Steel Alloy', 18.4, 156.75),
+('Recycled Circuit Board', 5, 'Eco-friendly PCB', 0, 0.15, 'Mixed Materials', 5.2, 12.99),
+('Energy Storage Unit', 6, 'Compact storage solution', 95.0, 1.8, 'Composite', 15.6, 178.50),
+('Smart Meter Housing', 7, 'Weather-resistant housing', 150.0, 0.95, 'Recycled Plastic', 3.8, 28.99),
+('Thermal Regulator', 8, 'Temperature control unit', 45.5, 0.65, 'Aluminum', 9.4, 67.50),
+('Power Converter', 9, 'High-efficiency converter', 75.0, 1.25, 'Mixed Metals', 14.2, 145.99),
+('Battery Management System', 10, 'Smart BMS', 0, 0.35, 'Electronic Components', 7.8, 89.99),
+('Solar Inverter', 1, 'Grid-tie inverter', 0, 4.2, 'Mixed Materials', 22.5, 399.99),
+('Wind Sensor', 2, 'Anemometer component', 35.0, 0.28, 'Plastic-Metal', 6.4, 45.99),
+('Energy Monitor', 3, 'Usage tracking device', 0, 0.18, 'Electronic', 4.9, 78.50),
+('Battery Connector', 4, 'High-current connector', 25.5, 0.12, 'Copper Alloy', 3.2, 15.99),
+('Cooling System', 5, 'Thermal management unit', 85.0, 2.4, 'Aluminum-Copper', 16.8, 225.50);
+
+INSERT INTO part_distributors (part_id, distributor_id, stock_quantity, lead_time_days) VALUES
+(1, 1, 500, 5),
+(1, 2, 350, 7),
+(2, 3, 200, 10),
+(2, 4, 150, 8),
+(3, 5, 100, 15),
+(4, 6, 250, 6),
+(5, 7, 1000, 3),
+(6, 8, 175, 12),
+(7, 9, 400, 5),
+(8, 10, 300, 7),
+(9, 1, 225, 8),
+(10, 2, 180, 9),
+(11, 3, 150, 11),
+(12, 4, 450, 4),
+(13, 5, 275, 6),
+(14, 6, 800, 3),
+(15, 7, 190, 9);
